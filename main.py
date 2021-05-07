@@ -45,13 +45,10 @@ class HalfLifeCalculator(object):
 
 
 def main():
-    N0 = float(input('Initial mass of the carbon in kg='))
-    t = float(input('Time for radioactive disintegration in sec='))
-    T = 1760
-    carbon = Substance(T, N0)
-    N = HalfLifeCalculator.calc_remaining(carbon, t)
-    print('Remaining carbon in kg=', N)
-
+    francium = Substance(600, 10)
+    values = HalfLifeCalculator.calc_all(francium, 3600)
+    HalfLifeCalculator.show_graph(values)
+	
 
 if __name__ == '__main__':
     main()
