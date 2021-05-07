@@ -1,19 +1,7 @@
 import math
 import matplotlib.pyplot as plt
 
-
-class Substance(object):
-    def __init__(self, mean_lifetime: float, initial_mass: float):
-        self._mean_lifetime = mean_lifetime
-        self._initial_mass = initial_mass
-
-    @property
-    def mean_lifetime(self) -> float:
-        return self._mean_lifetime
-
-    @property
-    def initial_mass(self) -> float:
-        return self._initial_mass
+from .substance import Substance
 
 
 class HalfLifeCalculator(object):
@@ -42,13 +30,3 @@ class HalfLifeCalculator(object):
         plt.ylabel('Nucleus left')
         plt.xlabel('Time in Seconds')
         plt.show()
-
-
-def main():
-    francium = Substance(600, 10)
-    values = HalfLifeCalculator.calc_all(francium, 3600)
-    HalfLifeCalculator.show_graph(values)
-	
-
-if __name__ == '__main__':
-    main()
