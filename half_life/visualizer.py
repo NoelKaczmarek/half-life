@@ -8,3 +8,8 @@ class Visualizer(object):
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.show()
+
+
+all = [
+    'Visualizer'
+]
