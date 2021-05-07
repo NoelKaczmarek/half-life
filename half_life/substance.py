@@ -10,3 +10,8 @@ class Substance(object):
     @property
     def initial_mass(self) -> float:
         return self._initial_mass
+
+
+all = [
+    'Substance'
+]
