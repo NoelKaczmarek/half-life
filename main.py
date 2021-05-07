@@ -1,4 +1,6 @@
 import math
+import matplotlib.pyplot as plt
+
 
 class Substance(object):
     def __init__(self, mean_lifetime: float, initial_mass: float):
@@ -33,6 +35,14 @@ class HalfLifeCalculator(object):
             current_t += step_size
 
         return values
+
+    @staticmethod
+    def show_graph(values):
+        plt.plot(values)
+        plt.ylabel('Nucleus left')
+        plt.xlabel('Time in Seconds')
+        plt.show()
+
 
 def main():
     N0 = float(input('Initial mass of the carbon in kg='))
