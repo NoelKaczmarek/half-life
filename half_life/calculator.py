@@ -22,3 +22,8 @@ class HalfLifeCalculator(object):
             current_t += step_size
 
         return values
+
+
+all = [
+    'HalfLifeCalculator'
+]
