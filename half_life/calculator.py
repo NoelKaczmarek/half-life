@@ -1,5 +1,4 @@
 import math
-import matplotlib.pyplot as plt
 
 from .substance import Substance
 
@@ -23,10 +22,3 @@ class HalfLifeCalculator(object):
             current_t += step_size
 
         return values
-
-    @staticmethod
-    def show_graph(values, xlabel='Time in Seconds', ylabel='Nucleus left'):
-        plt.plot(values)
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.show()
