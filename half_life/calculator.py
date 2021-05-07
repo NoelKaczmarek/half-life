@@ -25,8 +25,8 @@ class HalfLifeCalculator(object):
         return values
 
     @staticmethod
-    def show_graph(values):
+    def show_graph(values, xlabel='Time in Seconds', ylabel='Nucleus left'):
         plt.plot(values)
-        plt.ylabel('Nucleus left')
-        plt.xlabel('Time in Seconds')
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
         plt.show()
