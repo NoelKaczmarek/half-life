@@ -19,6 +19,7 @@ class Window(tk.Tk):
         self.running_nodes = tk.IntVar()
         self.paused_nodes = tk.IntVar()
 
+        self.title('Half-Life Simulation')
         # img = tk.Image('photo', file='icon.png')
         # self.tk.call('wm','iconphoto', self._w, img)
 
