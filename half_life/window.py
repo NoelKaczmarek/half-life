@@ -19,9 +19,8 @@ class Window(tk.Tk):
         self.running_nodes = tk.IntVar()
         self.paused_nodes = tk.IntVar()
 
-        self.title('netzwerk - Simulation Client')
-        img = tk.Image('photo', file='icon.png')
-        self.tk.call('wm','iconphoto', self._w, img)
+        # img = tk.Image('photo', file='icon.png')
+        # self.tk.call('wm','iconphoto', self._w, img)
 
         self.width = 600
         self.height = 400
