@@ -8,9 +8,6 @@ class Window(tk.Tk):
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
-
-        self.conf = {'base_path': '.'}
-        self.save = 'config.json'
         
         # State
         self.ready = False
