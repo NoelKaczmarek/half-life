@@ -1,3 +1,7 @@
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+import matplotlib
+
 from tkinter import ttk
 import tkinter as tk
 
@@ -5,7 +9,7 @@ LARGE_FONT= ('Helvetica', 20)
 
 
 class Window(tk.Tk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, on_value_change, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
         
@@ -13,17 +17,16 @@ class Window(tk.Tk):
         self.ready = False
         self.running = False
 
-        self.running_nodes = tk.IntVar()
-        self.paused_nodes = tk.IntVar()
+        self.on_value_change = on_value_change
 
         self.title('Half-Life Simulation')
-        # img = tk.Image('photo', file='icon.png')
-        # self.tk.call('wm','iconphoto', self._w, img)
+        img = tk.Image('photo', file='icon.png')
+        self.tk.call('wm','iconphoto', self._w, img)
 
         self.width = 600
         self.height = 400
-        self.geometry('%ix%i+%i+%i' % (self.width, self.height, self.winfo_screenwidth() / 2 - self.width / 2,
-                                        self.winfo_screenheight() / 2 - self.height / 2))
+        # self.geometry('%ix%i+%i+%i' % (self.width, self.height, self.winfo_screenwidth() / 2 - self.width / 2,
+        #                                self.winfo_screenheight() / 2 - self.height / 2))
         self.resizable(False, False)
         # ttk.Style().configure('TButton', padding=(0, 5, 0, 5), font='Helvetica')
 
@@ -44,7 +47,7 @@ class Window(tk.Tk):
 
             frame.grid(row=0, column=0, sticky='nsew')
 
-        self.show_frame(StartPage)
+        self.show_frame(DashboardView)
 
         menubar = tk.Menu(self)
 
@@ -74,14 +77,20 @@ class Window(tk.Tk):
         win = tk.Toplevel()
         win.wm_title('About')
 
+        win.columnconfigure(0, pad=2)
+
+        win.rowconfigure(0, pad=2)
+        win.rowconfigure(1, pad=2)
+        win.rowconfigure(2, pad=2)
+
         version = ttk.Label(win, text='Version 1.0.0')
-        version.grid()
+        version.grid(row=0, column=0)
 
         credit = ttk.Label(win, text='© 2021 Noel Kaczmarek')
-        credit.grid()
+        credit.grid(row=1, column=0)
 
         b = ttk.Button(win, text='Okay', command=win.destroy)
-        b.grid(row=1, column=0)
+        b.grid(row=2, column=0)
 
 
 class StartPage(tk.Frame):
@@ -148,64 +157,96 @@ class DashboardView(tk.Frame):
 
         self.app = controller
 
-        self.columnconfigure(0, pad=2, weight=1)
-        self.columnconfigure(1, pad=2)
+        self.columnconfigure(0, pad=2)
+        self.columnconfigure(1, pad=2, weight=1)
         self.columnconfigure(2, pad=2)
-        self.columnconfigure(3, pad=2, weight=1)
-        self.columnconfigure(4, pad=2)
 
         self.rowconfigure(0, pad=2)
         self.rowconfigure(1, pad=2)
         self.rowconfigure(2, pad=2)
         self.rowconfigure(3, pad=2)
         self.rowconfigure(4, pad=2)
-        self.rowconfigure(5, pad=2)
-        self.rowconfigure(6, pad=2)
-        self.rowconfigure(7, pad=2)
-        self.rowconfigure(8, pad=2, weight=1)
 
         self.status = tk.StringVar()
-        self.status.set('Not Connected')
 
         label = ttk.Label(self, text='Dashboard', font=LARGE_FONT)
         label.grid(row=0, column=0, sticky=tk.W)
 
-        url_label = ttk.Label(self, text='Server URL:')
+        url_label = ttk.Label(self, text='Time Window:')
         url_label.grid(row=1, column=0, sticky=tk.W)
-        self.url_value = ttk.Label(self)
-        self.url_value.grid(row=1, column=4, sticky=tk.E)
 
-        id_label = ttk.Label(self, text='ID:')
+        self.time_window = tk.DoubleVar()
+        time_window_value = ttk.Label(
+            self,
+            textvariable=self.time_window
+        )
+        time_window_value.grid(row=1, column=2)
+        time_window_slider = ttk.Scale(
+            self,
+            from_=0,
+            to=100,
+            orient='horizontal',
+            variable=self.time_window,
+            command=self.on_half_life_change
+        )
+        time_window_slider.grid(row=1, column=1)
+
+        id_label = ttk.Label(self, text='Initial Mass:')
         id_label.grid(row=2, column=0, sticky=tk.W)
-        self.id_val = ttk.Label(self)
-        self.id_val.grid(row=2, column=4, sticky=tk.E)
 
-        max_nodes_label = ttk.Label(self, text='Max. Nodes:')
-        max_nodes_label.grid(row=3, column=0, sticky=tk.W)
-        self.max_nodes_val = ttk.Label(self)
-        self.max_nodes_val.grid(row=3, column=4, sticky=tk.E)
+        self.initial_mass = tk.DoubleVar()
+        initial_mass_slider = ttk.Scale(
+            self,
+            from_=0,
+            to=100,
+            orient='horizontal',
+            variable=self.initial_mass,
+            command=self.on_half_life_change
+        )
+        initial_mass_slider.grid(row=2, column=1)
+        initial_mass_value = ttk.Label(
+            self,
+            textvariable=self.initial_mass
+        )
+        initial_mass_value.grid(row=2, column=2)
 
-        running_nodes_label = ttk.Label(self, text='Running Nodes:')
-        running_nodes_label.grid(row=4, column=0, sticky=tk.W)
-        running_nodes = ttk.Label(self, textvariable=self.app.running_nodes)
-        running_nodes.grid(row=4, column=4, sticky=tk.E)
+        status_label = ttk.Label(self, text='Half-Life:')
+        status_label.grid(row=3, column=0, sticky=tk.W)
 
-        paused_nodes_label = ttk.Label(self, text='Paused Nodes:')
-        paused_nodes_label.grid(row=5, column=0, sticky=tk.W)
-        paused_nodes = ttk.Label(self, textvariable=self.app.paused_nodes)
-        paused_nodes.grid(row=5, column=4, sticky=tk.E)
+        self.half_life = tk.DoubleVar()
+        half_life_slider = ttk.Scale(
+            self,
+            from_=0,
+            to=100,
+            orient='horizontal',
+            variable=self.half_life,
+            command=self.on_half_life_change
+        )
+        half_life_slider.grid(row=3, column=1)
+        half_life_value = ttk.Label(
+            self,
+            textvariable=self.half_life
+        )
+        half_life_value.grid(row=3, column=2)
 
-        status_label = ttk.Label(self, text='Status:')
-        status_label.grid(row=6, column=0, sticky=tk.W)
-        status_val = ttk.Label(self, textvariable=self.status)
-        status_val.grid(row=6, column=4, sticky=tk.E)
+        matplotlib.use('TkAgg')
+        self.fig = plt.figure(1)
+        canvas = FigureCanvasTkAgg(self.fig, master=self)
+        plot_widget = canvas.get_tk_widget()
+        plot_widget.grid(row=4, column=1, sticky=tk.S + tk.W)
 
-        self.progress = ttk.Progressbar(self, mode='determinate')
+    def on_time_window_change(self, event):
+        self.time_window = round(self.time_window)
+        self.app.on_value_change()
 
-        home_btn = ttk.Button(self, text='Back to Home',
-                            command=lambda: controller.show_frame(StartPage))
-        home_btn.grid(row=8, column=0, sticky=tk.S + tk.W)
+    def on_initial_mass_change(self, event):
+        self.app.on_value_change()
 
-        self.configure_btn = ttk.Button(self, text='Configure',
-                            command=lambda: controller.show_frame(ConfigView))
-        self.configure_btn.grid(row=8, column=2, sticky=tk.S + tk.E)
+    def on_half_life_change(self, event):
+        self.app.on_value_change()
+
+    def update_graph(self, vals):
+        """Example function triggered by Tkinter GUI to change matplotlib graphs."""
+        plt.clf()
+        plt.plot(vals)
+        self.fig.canvas.draw()
