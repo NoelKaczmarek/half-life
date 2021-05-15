@@ -76,6 +76,8 @@ class Window(tk.Tk):
     def about(self):
         win = tk.Toplevel()
         win.wm_title('About')
+        win.resizable(0, 0)
+        win.attributes('-toolwindow', True)
 
         win.columnconfigure(0, pad=2)
 
