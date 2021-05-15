@@ -189,7 +189,7 @@ class DashboardView(tk.Frame):
             to=100,
             orient='horizontal',
             variable=self.time_window,
-            command=self.on_half_life_change
+            command=self.on_value_change
         )
         time_window_slider.grid(row=1, column=1)
 
@@ -203,7 +203,7 @@ class DashboardView(tk.Frame):
             to=100,
             orient='horizontal',
             variable=self.initial_mass,
-            command=self.on_half_life_change
+            command=self.on_value_change
         )
         initial_mass_slider.grid(row=2, column=1)
         initial_mass_value = ttk.Label(
@@ -222,7 +222,7 @@ class DashboardView(tk.Frame):
             to=100,
             orient='horizontal',
             variable=self.half_life,
-            command=self.on_half_life_change
+            command=self.on_value_change
         )
         half_life_slider.grid(row=3, column=1)
         half_life_value = ttk.Label(
@@ -237,14 +237,7 @@ class DashboardView(tk.Frame):
         plot_widget = canvas.get_tk_widget()
         plot_widget.grid(row=4, column=1, sticky=tk.S + tk.W)
 
-    def on_time_window_change(self, event):
-        self.time_window = round(self.time_window)
-        self.app.on_value_change()
-
-    def on_initial_mass_change(self, event):
-        self.app.on_value_change()
-
-    def on_half_life_change(self, event):
+    def on_value_change(self, event):
         self.app.on_value_change()
 
     def update_graph(self, vals):
