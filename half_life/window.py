@@ -252,3 +252,9 @@ class DashboardView(tk.Frame):
         plt.clf()
         plt.plot(vals)
         self.fig.canvas.draw()
+
+
+all = [
+    'Window',
+    'DashboardView'
+]
