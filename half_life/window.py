@@ -182,7 +182,7 @@ class DashboardView(tk.Frame):
             self,
             textvariable=self.time_window
         )
-        time_window_value.grid(row=1, column=2)
+        time_window_value.grid(row=1, column=1)
         time_window_slider = ttk.Scale(
             self,
             from_=0,
@@ -191,12 +191,17 @@ class DashboardView(tk.Frame):
             variable=self.time_window,
             command=self.on_value_change
         )
-        time_window_slider.grid(row=1, column=1)
+        time_window_slider.grid(row=1, column=2)
 
         id_label = ttk.Label(self, text='Initial Mass:')
         id_label.grid(row=2, column=0, sticky=tk.W)
 
         self.initial_mass = tk.DoubleVar()
+        initial_mass_value = ttk.Label(
+            self,
+            textvariable=self.initial_mass
+        )
+        initial_mass_value.grid(row=2, column=1)
         initial_mass_slider = ttk.Scale(
             self,
             from_=0,
@@ -205,17 +210,17 @@ class DashboardView(tk.Frame):
             variable=self.initial_mass,
             command=self.on_value_change
         )
-        initial_mass_slider.grid(row=2, column=1)
-        initial_mass_value = ttk.Label(
-            self,
-            textvariable=self.initial_mass
-        )
-        initial_mass_value.grid(row=2, column=2)
+        initial_mass_slider.grid(row=2, column=2)
 
         status_label = ttk.Label(self, text='Half-Life:')
         status_label.grid(row=3, column=0, sticky=tk.W)
 
         self.half_life = tk.DoubleVar()
+        half_life_value = ttk.Label(
+            self,
+            textvariable=self.half_life
+        )
+        half_life_value.grid(row=3, column=1)
         half_life_slider = ttk.Scale(
             self,
             from_=0,
@@ -224,12 +229,7 @@ class DashboardView(tk.Frame):
             variable=self.half_life,
             command=self.on_value_change
         )
-        half_life_slider.grid(row=3, column=1)
-        half_life_value = ttk.Label(
-            self,
-            textvariable=self.half_life
-        )
-        half_life_value.grid(row=3, column=2)
+        half_life_slider.grid(row=3, column=2)
 
         matplotlib.use('TkAgg')
         self.fig = plt.figure(1)
