@@ -54,6 +54,8 @@ class Window(tk.Tk):
         filemenu = tk.Menu(menubar, tearoff=0)
 
         # Add file menu entries
+
+        filemenu.add_command(label='Export')
         
         filemenu.add_separator()
 
