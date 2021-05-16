@@ -169,8 +169,6 @@ class DashboardView(tk.Frame):
         self.rowconfigure(3, pad=2)
         self.rowconfigure(4, pad=2)
 
-        self.status = tk.StringVar()
-
         label = ttk.Label(self, text='Dashboard', font=LARGE_FONT)
         label.grid(row=0, column=0, sticky=tk.W)
 
