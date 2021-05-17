@@ -10,18 +10,24 @@ LARGE_FONT= ('Helvetica', 20)
 
 class Window(tk.Tk):
     def __init__(self, on_value_change, *args, **kwargs):
-
         tk.Tk.__init__(self, *args, **kwargs)
-        
-        # State
-        self.ready = False
-        self.running = False
 
         self.on_value_change = on_value_change
+        self.frames = {}
 
+        self.configure_gui()
+        self.create_widgets()
+
+        self.show_frame(DashboardView)
+        self.focus_force()
+
+    def configure_gui(self):
         self.title('Half-Life Simulation')
-        img = tk.Image('photo', file='icon.png')
+        img = tk.Image('photo', file=os.path.join(RESOURCE_PATH, 'icon.png'))
         self.tk.call('wm','iconphoto', self._w, img)
+        self.protocol('WM_DELETE_WINDOW', self.on_close)
+        # background_color = '#0099FF'
+        # self.configure(bg=background_color)
 
         self.width = 600
         self.height = 400
@@ -30,6 +36,7 @@ class Window(tk.Tk):
         self.resizable(False, False)
         # ttk.Style().configure('TButton', padding=(0, 5, 0, 5), font='Helvetica')
 
+    def create_widgets(self):
         container = tk.Frame(self)
 
         container.pack(side='top', fill='both', padx=10, pady=10, expand=True)
@@ -37,26 +44,21 @@ class Window(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {}
-
-        for F in (StartPage, ConfigView, DashboardView):
-
+        for F in (DashboardView,):
             frame = F(container, self)
 
             self.frames[F] = frame
 
             frame.grid(row=0, column=0, sticky='nsew')
 
-        self.show_frame(DashboardView)
+        self.create_menubar()
 
+    def create_menubar(self):
         menubar = tk.Menu(self)
 
         filemenu = tk.Menu(menubar, tearoff=0)
 
-        # Add file menu entries
-
-        filemenu.add_command(label='Export')
-        
+        filemenu.add_command(label='Export', command=self.get_frame(DashboardView).export)        
         filemenu.add_separator()
 
         filemenu.add_command(label='Quit', command=self.quit)
