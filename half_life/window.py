@@ -1,9 +1,12 @@
+from half_life import RESOURCE_PATH
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import matplotlib
 
+from tkinter import filedialog as fd
 from tkinter import ttk
 import tkinter as tk
+import os
 
 LARGE_FONT= ('Helvetica', 20)
 
