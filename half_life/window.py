@@ -188,6 +188,9 @@ class DashboardView(tk.Frame):
         )
         half_life_slider.grid(row=3, column=2)
 
+        self.create_plot()
+        
+    def create_plot(self):
         matplotlib.use('TkAgg')
         self.fig = plt.figure(1)
         plt.xlabel('Time in Seconds')
