@@ -1,6 +1,7 @@
 from half_life.calculator import HalfLifeCalculator
 from half_life.substance import Substance
 from .window import DashboardView, Window
+import sys
 
 
 class Application(object):
@@ -12,6 +13,7 @@ class Application(object):
     
     def run(self):
         self.window.mainloop()
+        sys.exit()
 
     def on_value_change(self):
         self.substance = Substance(float(self.window.get_frame(DashboardView).half_life.get()), float(self.window.get_frame(DashboardView).initial_mass.get()))
