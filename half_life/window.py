@@ -236,6 +236,8 @@ class DashboardView(tk.Frame):
 
         matplotlib.use('TkAgg')
         self.fig = plt.figure(1)
+        plt.xlabel('Time in Seconds')
+        plt.ylabel('Nuclei left in %')
         canvas = FigureCanvasTkAgg(self.fig, master=self)
         plot_widget = canvas.get_tk_widget()
         plot_widget.grid(row=4, column=1, sticky=tk.S + tk.W)
