@@ -101,6 +101,7 @@ class Window(tk.Tk):
         b = ttk.Button(win, text='OK', command=win.destroy)
         b.grid(row=2, column=0)
 
+        win.focus_force()
 
 class StartPage(tk.Frame):
 
