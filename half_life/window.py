@@ -248,6 +248,8 @@ class DashboardView(tk.Frame):
     def update_graph(self, vals):
         """Example function triggered by Tkinter GUI to change matplotlib graphs."""
         plt.clf()
+        plt.xlabel('Time in Seconds')
+        plt.ylabel('Nuclei left in %')
         plt.plot(vals)
         self.fig.canvas.draw()
 
