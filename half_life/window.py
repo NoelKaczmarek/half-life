@@ -255,6 +255,5 @@ class DashboardView(tk.Frame):
 
 
 all = [
-    'Window',
-    'DashboardView'
+    'Window'
 ]
