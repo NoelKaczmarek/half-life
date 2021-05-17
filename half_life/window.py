@@ -107,63 +107,16 @@ class Window(tk.Tk):
         self.quit()
 
 
-        dashboard_btn = ttk.Button(self, text='Dashboard',
-                            command=lambda: controller.show_frame(DashboardView))
-        dashboard_btn.pack()
-
-        confgure_btn = ttk.Button(self, text='Configure',
-                            command=lambda: controller.show_frame(ConfigView))
-        confgure_btn.pack()
-
-
-class ConfigView(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        self.app = controller
-
-        self.columnconfigure(0, pad=2)
-        self.columnconfigure(1, pad=2, weight=1)
-        self.columnconfigure(2, pad=2)
-        self.columnconfigure(3, pad=2)
-
-        self.rowconfigure(0, pad=2)
-        self.rowconfigure(1, pad=2)
-        self.rowconfigure(2, pad=2)
-        self.rowconfigure(3, pad=2)
-        self.rowconfigure(4, pad=2, weight=1)
-
-        title = ttk.Label(self, text='Config', font=LARGE_FONT)
-        title.grid(row=0, column=0, sticky=tk.W)
-
-        url_label = ttk.Label(self, text='Server URL: ')
-        url_label.grid(row=1, column=0, sticky=tk.W)
-        self.url = ttk.Entry(self)
-        self.url.grid(row=1, column=1, sticky=tk.W + tk.E)
-
-        max_nodes_label = ttk.Label(self, text='Max. Nodes: ')
-        max_nodes_label.grid(row=2, column=0, sticky=tk.W)
-        self.max_nodes = ttk.Entry(self)
-        self.max_nodes.grid(row=2, column=1, sticky=tk.W + tk.E)
-
-        base_dir_label = ttk.Label(self, text='Base Directory: ')
-        base_dir_label.grid(row=3, column=0, sticky=tk.W)
-        self.base_dir = ttk.Entry(self)
-        self.base_dir.grid(row=3, column=1, sticky=tk.W + tk.E)
-
-    def update_entries(self):
-        self.url.insert(0, self.app.conf['url'])
-        self.max_nodes.insert(0, self.app.conf['max_nodes'])
-        self.base_dir.insert(0, self.app.conf['base_path'])
-
-
 class DashboardView(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
         self.app = controller
 
+        self.configure_gui()
+        self.create_widgets()
+
+    def configure_gui(self):
         self.columnconfigure(0, pad=2)
         self.columnconfigure(1, pad=2, weight=1)
         self.columnconfigure(2, pad=2)
@@ -172,8 +125,9 @@ class DashboardView(tk.Frame):
         self.rowconfigure(1, pad=2)
         self.rowconfigure(2, pad=2)
         self.rowconfigure(3, pad=2)
-        self.rowconfigure(4, pad=2)
+        self.rowconfigure(4, pad=0)
 
+    def create_widgets(self):
         label = ttk.Label(self, text='Dashboard', font=LARGE_FONT)
         label.grid(row=0, column=0, sticky=tk.W)
 
