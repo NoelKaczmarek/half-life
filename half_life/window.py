@@ -202,6 +202,17 @@ class DashboardView(tk.Frame):
     def on_value_change(self, event):
         self.app.on_value_change()
 
+    def export(self):
+        filename = fd.asksaveasfilename(
+            title='Save file',
+            initialdir='.',
+            filetypes=[('PNG files', '*.png'),],
+            defaultextension='.png')
+        
+        if filename:
+            plt.savefig(filename, 
+                dpi = 100)
+
     def update_graph(self, vals):
         """Example function triggered by Tkinter GUI to change matplotlib graphs."""
         plt.clf()
