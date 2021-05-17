@@ -103,12 +103,9 @@ class Window(tk.Tk):
 
         win.focus_force()
 
-class StartPage(tk.Frame):
+    def on_close(self):
+        self.quit()
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text='Start Page', font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
 
         dashboard_btn = ttk.Button(self, text='Dashboard',
                             command=lambda: controller.show_frame(DashboardView))
