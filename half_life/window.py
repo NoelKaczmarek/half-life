@@ -93,7 +93,7 @@ class Window(tk.Tk):
         credit = ttk.Label(win, text='© 2021 Noel Kaczmarek')
         credit.grid(row=1, column=0)
 
-        b = ttk.Button(win, text='Okay', command=win.destroy)
+        b = ttk.Button(win, text='OK', command=win.destroy)
         b.grid(row=2, column=0)
 
 
