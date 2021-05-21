@@ -41,7 +41,7 @@ class Window(tk.Tk):
         # ttk.Style().configure('TButton', padding=(0, 5, 0, 5), font='Helvetica')
 
     def create_widgets(self):
-        container = tk.Frame(self)
+        container = ttk.Frame(self)
 
         container.pack(side='top', fill='both', padx=10, pady=10, expand=True)
 
