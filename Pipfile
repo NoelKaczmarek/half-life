@@ -9,6 +9,7 @@ matplotlib = "*"
 
 [dev-packages]
 pylint = "*"
+pyinstaller = "*"
 
 [requires]
 python_version = "3.9"
