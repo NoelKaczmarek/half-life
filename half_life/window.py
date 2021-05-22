@@ -136,6 +136,7 @@ class DashboardView(tk.Frame):
         url_label.grid(row=1, column=0, sticky=tk.W)
 
         self.time_window = tk.DoubleVar()
+        self.time_window.set(100)
         time_window_value = ttk.Label(
             self,
             textvariable=self.time_window
