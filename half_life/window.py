@@ -48,7 +48,7 @@ class Window(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        for F in (DashboardView,):
+        for F in (StartPage, SimulationView, GraphView,):
             frame = F(container, self)
 
             self.frames[F] = frame
