@@ -68,6 +68,23 @@ class Window(tk.Tk):
         filemenu.add_command(label='Quit', command=self.quit)
         menubar.add_cascade(label='File', menu=filemenu)
 
+        navmenu = tk.Menu(menubar, tearoff=0)
+
+        commands = {}
+
+        for frame in self.frames:
+            def frame_command(frame):
+                def show_frame():
+                    self.show_frame(frame)
+                return show_frame
+
+            commands[frame] = frame_command(frame)
+
+        for frame in self.frames:
+            navmenu.add_command(label=frame.name, command=commands[frame])
+        
+        menubar.add_cascade(label='Navigation', menu=navmenu)
+
         helpmenu = tk.Menu(menubar, tearoff=0)
         helpmenu.add_command(label='About', command=self.about)
         menubar.add_cascade(label='Help', menu=helpmenu)
