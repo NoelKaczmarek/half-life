@@ -201,7 +201,7 @@ class DashboardView(tk.Frame):
         plot_widget = canvas.get_tk_widget()
         plot_widget.grid(row=4, column=1, sticky=tk.S + tk.W)
 
-    def on_value_change(self, event):
+    def on_value_change(self, event=None):
         self.app.on_value_change()
 
     def export(self):
