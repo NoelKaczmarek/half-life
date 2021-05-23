@@ -125,6 +125,27 @@ class Window(tk.Tk):
         self.quit()
 
 
+class StartPage(tk.Frame):
+    name = 'Home'
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.grid_columnconfigure(0, weight=1)
+
+        label = ttk.Label(self, text='Start Page', font=LARGE_FONT)
+        label.grid(row=0, pady=10, padx=10, sticky=tk.E + tk.W)
+
+        s = ttk.Style()
+        s.configure('my.TButton', font=('Helvetica', 13))
+
+        graph_btn = ttk.Button(self, text='Graph',
+                            command=lambda: controller.show_frame(GraphView), style='my.TButton')
+        graph_btn.grid(row=1, ipadx=50, ipady=20, sticky=tk.E + tk.W)
+
+        simulation_btn = ttk.Button(self, text='Simulation',
+                            command=lambda: controller.show_frame(SimulationView), style='my.TButton')
+        simulation_btn.grid(row=2, ipadx=50, ipady=20, sticky=tk.E + tk.W)
+
 
 class SimulationView(tk.Frame):
     name = 'Simulation'
