@@ -33,8 +33,8 @@ class Window(tk.Tk):
         # background_color = '#0099FF'
         # self.configure(bg=background_color)
 
-        self.width = 600
-        self.height = 400
+        self.width = 640
+        self.height = 480
         # self.geometry('%ix%i+%i+%i' % (self.width, self.height, self.winfo_screenwidth() / 2 - self.width / 2,
         #                                self.winfo_screenheight() / 2 - self.height / 2))
         self.resizable(False, False)
