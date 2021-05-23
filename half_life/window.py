@@ -28,7 +28,7 @@ class Window(tk.Tk):
         self.title('Half-Life Simulation')
         # img = tk.Image('photo', file=os.path.join(RESOURCE_PATH, 'icon.png'))
         # self.tk.call('wm','iconphoto', self._w, img)
-        # self.protocol('WM_DELETE_WINDOW', self.on_close)
+        self.protocol('WM_DELETE_WINDOW', self.on_close)
         self.iconbitmap(os.path.join(RESOURCE_PATH, 'icon.ico'))
         # background_color = '#0099FF'
         # self.configure(bg=background_color)
