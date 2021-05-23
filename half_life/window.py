@@ -37,7 +37,7 @@ class Window(tk.Tk):
         self.height = 480
         # self.geometry('%ix%i+%i+%i' % (self.width, self.height, self.winfo_screenwidth() / 2 - self.width / 2,
         #                                self.winfo_screenheight() / 2 - self.height / 2))
-        self.resizable(False, False)
+        # self.resizable(False, False)
         # ttk.Style().configure('TButton', padding=(0, 5, 0, 5), font='Helvetica')
 
     def create_widgets(self):
