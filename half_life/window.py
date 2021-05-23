@@ -62,7 +62,7 @@ class Window(tk.Tk):
 
         filemenu = tk.Menu(menubar, tearoff=0)
 
-        filemenu.add_command(label='Export', command=self.get_frame(DashboardView).export)        
+        filemenu.add_command(label='Export', command=self.get_frame(GraphView).export)        
         filemenu.add_separator()
 
         filemenu.add_command(label='Quit', command=self.quit)
@@ -125,7 +125,7 @@ class Window(tk.Tk):
         self.quit()
 
 
-class DashboardView(tk.Frame):
+class GraphView(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
