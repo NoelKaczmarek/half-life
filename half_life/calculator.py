@@ -12,7 +12,7 @@ class HalfLifeCalculator(object):
         return substance.initial_mass * math.exp(-t / substance.mean_lifetime)
 
     @staticmethod
-    def calc_all(substance: Substance, t: float, step_size: float = 1) -> list:
+    def calc_all(substance: Substance, t: float, step_size: float = 0.01) -> list:
         values = []
         steps = round(t / step_size)
         current_t = 0
