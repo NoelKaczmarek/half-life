@@ -1,4 +1,6 @@
 from half_life import RESOURCE_PATH
+from half_life.substance import Substance
+from half_life.calculator import HalfLifeCalculator
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import matplotlib
@@ -6,6 +8,7 @@ import matplotlib
 from tkinter import filedialog as fd
 from tkinter import ttk
 import tkinter as tk
+import random
 import os
 
 LARGE_FONT= ('Helvetica', 20)
