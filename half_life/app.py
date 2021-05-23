@@ -13,6 +13,7 @@ class Application(object):
     
     def run(self):
         self.on_value_change()
+        self.window.tk.call('tk', 'scaling', 2.0)
         self.window.mainloop()
         sys.exit()
 
