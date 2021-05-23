@@ -126,7 +126,7 @@ class DashboardView(tk.Frame):
         self.rowconfigure(1, pad=2)
         self.rowconfigure(2, pad=2)
         self.rowconfigure(3, pad=2)
-        self.rowconfigure(4, pad=0)
+        self.rowconfigure(4, pad=0, weight=1)
 
     def create_widgets(self):
         label = ttk.Label(self, text='Dashboard', font=LARGE_FONT)
