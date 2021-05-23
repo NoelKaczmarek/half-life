@@ -7,8 +7,7 @@ added_files = [
 ]
 
 
-a = Analysis(['window.py'],
-             pathex=['C:\\Users\\Noel Kaczmarek\\.virtualenvs\\half-life-5kkWj3xB\\Lib\\site-packages', 'E:\\Development\\half-life'],
+a = Analysis(['run.py'],
              binaries=[],
              datas=added_files,
              hiddenimports=[],
