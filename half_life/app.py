@@ -12,6 +12,7 @@ class Application(object):
         self.time_window = 0
     
     def run(self):
+        self.on_value_change()
         self.window.mainloop()
         sys.exit()
 
