@@ -156,6 +156,7 @@ class DashboardView(tk.Frame):
         id_label.grid(row=2, column=0, sticky=tk.W)
 
         self.initial_mass = tk.DoubleVar()
+        self.initial_mass.set(100)
         initial_mass_value = ttk.Label(
             self,
             textvariable=self.initial_mass
@@ -175,6 +176,7 @@ class DashboardView(tk.Frame):
         status_label.grid(row=3, column=0, sticky=tk.W)
 
         self.half_life = tk.DoubleVar()
+        self.half_life.set(20)
         half_life_value = ttk.Label(
             self,
             textvariable=self.half_life
