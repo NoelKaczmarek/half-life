@@ -125,6 +125,199 @@ class Window(tk.Tk):
         self.quit()
 
 
+
+class SimulationView(tk.Frame):
+    name = 'Simulation'
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        self.app = controller
+        
+        self.running = False
+
+        self.decayed_points = []
+        self.points = []
+
+        self.mean_lifetime = tk.IntVar()
+        self.mean_lifetime.set(20)
+
+        self.decayed = 0
+        self.time_elapsed = tk.IntVar()
+        self.substance = Substance(self.mean_lifetime.get(), 100)
+
+        self.total_points = tk.IntVar()
+        self.points_left = tk.DoubleVar()
+        self.points_decayed = tk.DoubleVar()
+
+        self.configure_gui()
+        self.create_widgets()
+
+    def configure_gui(self):
+        self.line_distance = 20
+        self.point_size = 10
+
+    def create_widgets(self):
+        label = ttk.Label(self, text='Simulation', font=LARGE_FONT)
+        label.pack(fill=tk.X)
+
+        self.canvas = tk.Canvas(self)
+        self.canvas.pack(expand=tk.YES, fill=tk.BOTH, pady=2)
+        # self.canvas.bind('<B1-Motion>', self.paint)
+
+        self.create_labels()
+
+    def create_labels(self):
+        bottom_frame = ttk.Frame(self)
+        bottom_frame.pack(side=tk.BOTTOM, fill=tk.BOTH)
+
+        bottom_frame.columnconfigure(0, pad=20)
+        bottom_frame.columnconfigure(1, pad=2)
+        bottom_frame.columnconfigure(2, pad=2, weight=1)
+
+        bottom_frame.rowconfigure(0, pad=2)
+        bottom_frame.rowconfigure(1, pad=2)
+        bottom_frame.rowconfigure(2, pad=2)
+        bottom_frame.rowconfigure(3, pad=2)
+        bottom_frame.rowconfigure(4, pad=2)
+
+        total_points_label = ttk.Label(bottom_frame, text='Total Points:')
+        total_points_label.grid(row=0, column=0, sticky=tk.W)
+
+        total_points_value = ttk.Label(bottom_frame, textvariable=self.total_points)
+        total_points_value.grid(row=0, column=1, sticky=tk.E + tk.W)
+
+        points_left_label = ttk.Label(bottom_frame, text='Points Left:')
+        points_left_label.grid(row=1, column=0, sticky=tk.W)
+
+        points_left_value = ttk.Label(bottom_frame, textvariable=self.points_left)
+        points_left_value.grid(row=1, column=1, sticky=tk.E + tk.W)
+
+        points_decayed_label = ttk.Label(bottom_frame, text='Points Decayed:')
+        points_decayed_label.grid(row=2, column=0, sticky=tk.W)
+
+        points_decayed_value = ttk.Label(bottom_frame, textvariable=self.points_decayed)
+        points_decayed_value.grid(row=2, column=1, sticky=tk.E + tk.W)
+
+        time_elapsed_label = ttk.Label(bottom_frame, text='Time Elapsed:')
+        time_elapsed_label.grid(row=3, column=0, sticky=tk.W)
+
+        time_elapsed_value = ttk.Label(bottom_frame, textvariable=self.time_elapsed)
+        time_elapsed_value.grid(row=3, column=1, sticky=tk.E + tk.W)
+
+        mean_lifetime_label = ttk.Label(bottom_frame, text='Mean Lifetime:')
+        mean_lifetime_label.grid(row=4, column=0, sticky=tk.W)
+
+        self.mean_lifetime_slider = ttk.Scale(bottom_frame,
+            from_=0,
+            to=100,
+            orient='horizontal',
+            variable=self.mean_lifetime)
+        self.mean_lifetime_slider.grid(row=4, column=2, sticky=tk.E)
+
+        mean_lifetime_value = ttk.Label(bottom_frame, textvariable=self.mean_lifetime)
+        mean_lifetime_value.grid(row=4, column=1, sticky=tk.E + tk.W)
+
+        self.start_btn = ttk.Button(bottom_frame, text='Start', command=self.start)
+        self.start_btn.grid(row=0, column=2, sticky=tk.E, ipadx=15)
+
+        self.pause_btn = ttk.Button(bottom_frame, text='Pause', state=tk.DISABLED, command=self.pause)
+        self.pause_btn.grid(row=1, column=2, sticky=tk.E, ipadx=15)
+
+    def draw_checkerboard(self, line_distance):
+        self.canvas.update()
+        width, height = self.canvas.winfo_width(), self.canvas.winfo_height()
+
+        for x in range(line_distance, width, line_distance):
+            self.canvas.create_line(x, 0, x, height, fill='#476042')
+
+        for y in range(line_distance, height, line_distance):
+            self.canvas.create_line(0, y, width, y, fill='#476042')
+
+    def paint(self, event):
+        python_green = '#476042'
+        x1, y1 = (event.x - 1), (event.y - 1)
+        x2, y2 = (event.x + 1), (event.y + 1)
+        self.canvas.create_oval(x1, y1, x2, y2, fill=python_green)
+
+    def draw_point(self, x, y):
+        python_green = '#0099FF'
+        one_axis_size = self.point_size / 2
+        x1, y1 = (x - one_axis_size), (y - one_axis_size)
+        x2, y2 = (x + one_axis_size), (y + one_axis_size)
+        return self.canvas.create_oval(x1, y1, x2, y2, fill=python_green)
+
+    def draw_points(self):
+        width, height = self.canvas.winfo_width(), self.canvas.winfo_height()
+        points_per_row = round(width / self.line_distance)
+        points_per_column = round(height / self.line_distance)
+        self.decayed_points = []
+        self.points = []
+
+        for i in range(points_per_column):
+            for j in range(points_per_row):
+                self.points.append(self.draw_point(j * self.line_distance + self.point_size, i * self.line_distance + self.point_size))
+        
+    def start(self):
+        if self.running:
+            self.running = False
+            self.start_btn.configure(text='Start')
+            self.pause_btn.configure(state=tk.DISABLED, text='Pause')
+            self.mean_lifetime_slider.configure(state=tk.NORMAL)
+            self.canvas.delete('all')
+        else:
+            self.running = True
+            self.start_btn.configure(text='Reset')
+            self.pause_btn.configure(state=tk.NORMAL)
+            self.mean_lifetime_slider.configure(state=tk.DISABLED)
+        
+        self.draw_checkerboard(self.line_distance)
+        self.draw_points()
+
+        self.substance = Substance(self.mean_lifetime.get(), 100)
+        self.total_points.set(len(self.points))
+        self.time_elapsed.set(0)
+        self.decayed = 0
+
+        self.loop()
+
+    def pause(self):
+        if self.running:
+            self.running = False
+            self.pause_btn.configure(text='Resume')
+        else:
+            self.running = True
+            self.pause_btn.configure(text='Pause')
+            self.loop()
+
+    def loop(self):
+        if not self.running:
+            return
+        
+        decayed_last = self.decayed
+        percent_left = HalfLifeCalculator.calc_step(self.substance, self.time_elapsed.get())
+        percent_decayed = 100 - percent_left
+        self.points_left.set(percent_left / 100 * self.total_points.get())
+        self.points_decayed.set(self.total_points.get() - self.points_left.get())
+        self.decayed = self.points_decayed.get()
+        points_to_decay = self.decayed - decayed_last
+        # print('Left (%):', percent_left, 'Decayed (%):', percent_decayed, 'To decay (Points):', points_to_decay)
+
+        for _ in range(round(points_to_decay)):
+            point = random.choice(self.points)
+            self.points.remove(point)
+            self.decayed_points.append(point)
+            self.canvas.itemconfig(point, fill='orange')
+
+        self.update()
+
+        if len(self.points) == 0:
+            self.running = False
+
+        self.time_elapsed.set(self.time_elapsed.get() + 1)
+        self.canvas.after(1000, self.loop)
+
+        
 class GraphView(tk.Frame):
     name = 'Graph'
 
