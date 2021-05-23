@@ -21,7 +21,7 @@ class Window(tk.Tk):
         self.configure_gui()
         self.create_widgets()
 
-        self.show_frame(DashboardView)
+        self.show_frame(StartPage)
         self.focus_force()
 
     def configure_gui(self):
