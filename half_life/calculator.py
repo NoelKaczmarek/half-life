@@ -17,8 +17,9 @@ class HalfLifeCalculator(object):
         steps = round(t / step_size)
         current_t = 0
 
-        for _ in range(steps):
-            values.append(substance.initial_mass * (2 ** (-(current_t / substance.mean_lifetime))))
+        for i in range(steps):
+            res = HalfLifeCalculator.calc_step(substance, current_t)
+            values.append(res / substance.initial_mass * 100 if i > 0 else 100)
             current_t += step_size
 
         return values
