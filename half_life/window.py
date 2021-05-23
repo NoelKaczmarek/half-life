@@ -144,7 +144,7 @@ class DashboardView(tk.Frame):
         time_window_value.grid(row=1, column=1)
         time_window_slider = ttk.Scale(
             self,
-            from_=0,
+            from_=1,
             to=100,
             orient='horizontal',
             variable=self.time_window,
@@ -163,7 +163,7 @@ class DashboardView(tk.Frame):
         initial_mass_value.grid(row=2, column=1)
         initial_mass_slider = ttk.Scale(
             self,
-            from_=0,
+            from_=1,
             to=100,
             orient='horizontal',
             variable=self.initial_mass,
@@ -182,7 +182,7 @@ class DashboardView(tk.Frame):
         half_life_value.grid(row=3, column=1)
         half_life_slider = ttk.Scale(
             self,
-            from_=0,
+            from_=1,
             to=100,
             orient='horizontal',
             variable=self.half_life,
