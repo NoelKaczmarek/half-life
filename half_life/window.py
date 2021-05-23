@@ -126,6 +126,8 @@ class Window(tk.Tk):
 
 
 class GraphView(tk.Frame):
+    name = 'Graph'
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
