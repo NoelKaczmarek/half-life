@@ -233,7 +233,7 @@ class SimulationView(tk.Frame):
         mean_lifetime_label.grid(row=4, column=0, sticky=tk.W)
 
         self.mean_lifetime_slider = ttk.Scale(bottom_frame,
-            from_=0,
+            from_=1,
             to=100,
             orient='horizontal',
             variable=self.mean_lifetime)
