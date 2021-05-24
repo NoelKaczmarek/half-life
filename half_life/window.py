@@ -171,8 +171,8 @@ class SimulationView(tk.Frame):
         self.substance = Substance(self.half_life.get(), 100)
 
         self.total_points = tk.IntVar()
-        self.points_left = tk.DoubleVar()
-        self.points_decayed = tk.DoubleVar()
+        self.points_left = tk.IntVar()
+        self.points_decayed = tk.IntVar()
 
         self.configure_gui()
         self.create_widgets()
@@ -290,13 +290,13 @@ class SimulationView(tk.Frame):
             self.time_elapsed.set(0)
             self.start_btn.configure(text='Start')
             self.pause_btn.configure(state=tk.DISABLED, text='Pause')
-            self.mean_lifetime_slider.configure(state=tk.NORMAL)
+            self.half_life_slider.configure(state=tk.NORMAL)
             self.canvas.delete('all')
         else:
             self.running = True
             self.start_btn.configure(text='Reset')
             self.pause_btn.configure(state=tk.NORMAL)
-            self.mean_lifetime_slider.configure(state=tk.DISABLED)
+            self.half_life_slider.configure(state=tk.DISABLED)
         
         self.draw_checkerboard(self.line_distance)
         self.draw_points()
@@ -324,9 +324,11 @@ class SimulationView(tk.Frame):
         decayed_last = self.decayed
         percent_left = HalfLifeCalculator.calc_step(self.substance, self.time_elapsed.get())
         percent_decayed = 100 - percent_left
-        self.points_left.set(percent_left / 100 * self.total_points.get())
-        self.points_decayed.set(self.total_points.get() - self.points_left.get())
-        self.decayed = self.points_decayed.get()
+        points_left = percent_left / 100 * self.total_points.get()
+        self.points_left.set(round(points_left))
+        points_decayed = self.total_points.get() - self.points_left.get()
+        self.points_decayed.set(round(points_decayed))
+        self.decayed = points_decayed
         points_to_decay = self.decayed - decayed_last
         # print('Left (%):', percent_left, 'Decayed (%):', percent_decayed, 'To decay (Points):', points_to_decay)
 
