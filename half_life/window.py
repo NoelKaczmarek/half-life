@@ -163,12 +163,12 @@ class SimulationView(tk.Frame):
         self.decayed_points = []
         self.points = []
 
-        self.mean_lifetime = tk.IntVar()
-        self.mean_lifetime.set(20)
+        self.half_life = tk.IntVar()
+        self.half_life.set(20)
 
         self.decayed = 0
         self.time_elapsed = tk.IntVar()
-        self.substance = Substance(self.mean_lifetime.get(), 100)
+        self.substance = Substance(self.half_life.get(), 100)
 
         self.total_points = tk.IntVar()
         self.points_left = tk.DoubleVar()
@@ -229,18 +229,18 @@ class SimulationView(tk.Frame):
         time_elapsed_value = ttk.Label(bottom_frame, textvariable=self.time_elapsed)
         time_elapsed_value.grid(row=3, column=1, sticky=tk.E + tk.W)
 
-        mean_lifetime_label = ttk.Label(bottom_frame, text='Mean Lifetime:')
+        mean_lifetime_label = ttk.Label(bottom_frame, text='Half-life:')
         mean_lifetime_label.grid(row=4, column=0, sticky=tk.W)
 
-        self.mean_lifetime_slider = ttk.Scale(bottom_frame,
+        self.half_life_slider = ttk.Scale(bottom_frame,
             from_=1,
             to=100,
             orient='horizontal',
-            variable=self.mean_lifetime)
-        self.mean_lifetime_slider.grid(row=4, column=2, sticky=tk.E)
+            variable=self.half_life)
+        self.half_life_slider.grid(row=4, column=2, sticky=tk.E)
 
-        mean_lifetime_value = ttk.Label(bottom_frame, textvariable=self.mean_lifetime)
-        mean_lifetime_value.grid(row=4, column=1, sticky=tk.E + tk.W)
+        half_life_value = ttk.Label(bottom_frame, textvariable=self.half_life)
+        half_life_value.grid(row=4, column=1, sticky=tk.E + tk.W)
 
         self.start_btn = ttk.Button(bottom_frame, text='Start', command=self.start)
         self.start_btn.grid(row=0, column=2, sticky=tk.E, ipadx=15)
@@ -301,7 +301,7 @@ class SimulationView(tk.Frame):
         self.draw_checkerboard(self.line_distance)
         self.draw_points()
 
-        self.substance = Substance(self.mean_lifetime.get(), 100)
+        self.substance = Substance(self.half_life.get(), 100)
         self.total_points.set(len(self.points))
         self.time_elapsed.set(0)
         self.decayed = 0
