@@ -285,6 +285,9 @@ class SimulationView(tk.Frame):
     def start(self):
         if self.running:
             self.running = False
+            self.points_left.set(0)
+            self.points_decayed.set(0)
+            self.time_elapsed.set(0)
             self.start_btn.configure(text='Start')
             self.pause_btn.configure(state=tk.DISABLED, text='Pause')
             self.mean_lifetime_slider.configure(state=tk.NORMAL)
