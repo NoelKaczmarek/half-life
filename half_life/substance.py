@@ -10,7 +10,6 @@ class Substance(object):
 
     @property
     def half_life(self) -> float:
-        print(self._half_life)
         return self._half_life
 
     @property
