@@ -24,3 +24,7 @@ class Application(object):
         vals = HalfLifeCalculator.calc_all(self.substance, self.time_window)
 
         self.window.get_frame(GraphView).update_graph(vals)
+
+__all__ = [
+    'Application'
+]
