@@ -10,6 +10,6 @@ class Visualizer(object):
         plt.show()
 
 
-all = [
+__all__ = [
     'Visualizer'
 ]

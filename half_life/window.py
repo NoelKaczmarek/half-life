@@ -470,6 +470,6 @@ class GraphView(tk.Frame):
         self.fig.canvas.draw()
 
 
-all = [
+__all__ = [
     'Window'
 ]

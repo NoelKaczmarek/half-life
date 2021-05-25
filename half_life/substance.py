@@ -25,6 +25,6 @@ class Substance(object):
         return self._decay_constant
 
 
-all = [
+__all__ = [
     'Substance'
 ]

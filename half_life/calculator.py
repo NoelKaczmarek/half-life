@@ -33,6 +33,6 @@ class HalfLifeCalculator(object):
         return -substance.decay_constant * N * d_t
 
 
-all = [
+__all__ = [
     'HalfLifeCalculator'
 ]
