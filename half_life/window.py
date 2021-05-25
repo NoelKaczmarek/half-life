@@ -167,13 +167,14 @@ class SimulationView(tk.Frame):
         self.half_life = tk.IntVar()
         self.half_life.set(20)
 
-        self.decayed = 0
         self.time_elapsed = tk.IntVar()
         self.substance = Substance(self.half_life.get(), 100)
 
         self.total_points = tk.IntVar()
         self.points_left = tk.IntVar()
         self.points_decayed = tk.IntVar()
+
+        self.rounding_leftover = 0.0
 
         self.configure_gui()
         self.create_widgets()
@@ -290,7 +291,7 @@ class SimulationView(tk.Frame):
             self.running = False
             self.points_left.set(0)
             self.points_decayed.set(0)
-            self.time_elapsed.set(0)
+            self.rounding_leftover = 0.0
             self.start_btn.configure(text='Start')
             self.pause_btn.configure(state=tk.DISABLED, text='Pause')
             self.half_life_slider.configure(state=tk.NORMAL)
@@ -304,8 +305,11 @@ class SimulationView(tk.Frame):
         self.draw_checkerboard(self.line_distance)
         self.draw_points()
 
-        self.substance = Substance(self.half_life.get(), 100)
-        self.total_points.set(len(self.points))
+        total_points = len(self.points)
+
+        self.substance = Substance(self.half_life.get(), total_points)
+        self.total_points.set(total_points)
+        self.points_left.set(total_points)
         self.time_elapsed.set(0)
 
         self.canvas.after(1000, self.loop)
@@ -325,18 +329,22 @@ class SimulationView(tk.Frame):
         if not self.running or len(self.points) == 0:
             return
         
-        decayed_last = self.decayed
-        percent_left = HalfLifeCalculator.calc_step(self.substance, self.time_elapsed.get())
-        percent_decayed = 100 - percent_left
-        points_left = percent_left / 100 * self.total_points.get()
-        self.points_left.set(round(points_left))
-        points_decayed = self.total_points.get() - self.points_left.get()
-        self.points_decayed.set(round(points_decayed))
-        self.decayed = points_decayed
-        points_to_decay = self.decayed - decayed_last
-        # print('Left (%):', percent_left, 'Decayed (%):', percent_decayed, 'To decay (Points):', points_to_decay)
+        delta_points = abs(HalfLifeCalculator.calc_step_delta(self.substance, len(self.points), 1))
+        delta_points_rounded = round(delta_points)
 
-        for _ in range(round(points_to_decay)):
+        self.rounding_leftover += (delta_points - delta_points_rounded)
+
+        if self.rounding_leftover > 1:
+            delta_points_rounded += 1
+            self.rounding_leftover -= 1
+        elif self.rounding_leftover < -1:
+            delta_points_rounded -= 1
+            self.rounding_leftover += 1
+
+        self.points_left.set(self.points_left.get() - delta_points_rounded)
+        self.points_decayed.set(self.points_decayed.get() + delta_points_rounded)
+
+        for _ in range(delta_points_rounded):
             point = random.choice(self.points)
             self.points.remove(point)
             self.decayed_points.append(point)
