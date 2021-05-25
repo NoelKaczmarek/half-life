@@ -113,7 +113,7 @@ class Window(tk.Tk):
         win.rowconfigure(1, pad=2)
         win.rowconfigure(2, pad=2)
 
-        version = ttk.Label(win, text='Version 1.0.2')
+        version = ttk.Label(win, text='Version 1.1.0')
         version.grid(row=0, column=0)
 
         credit = ttk.Label(win, text='© 2021 Noel Kaczmarek')
