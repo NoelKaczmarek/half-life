@@ -236,7 +236,8 @@ class SimulationView(tk.Frame):
             from_=1,
             to=100,
             orient='horizontal',
-            variable=self.half_life)
+            value=self.half_life.get(),
+            command=lambda s: self.half_life.set('%d' % float(s)))
         self.half_life_slider.grid(row=4, column=2, sticky=tk.E)
 
         half_life_value = ttk.Label(bottom_frame, textvariable=self.half_life)
