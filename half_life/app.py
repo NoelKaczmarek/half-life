@@ -8,7 +8,7 @@ class Application(object):
     def __init__(self):
         self.window = Window(self.on_value_change)
 
-        self.substance: Substance = Substance(0, 0)
+        self.substance: Substance = Substance(1, 0)
         self.time_window = 0
     
     def run(self):
