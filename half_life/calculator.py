@@ -28,6 +28,10 @@ class HalfLifeCalculator(object):
     def calc_step(substance: Substance, t: float) -> list:
         return substance.initial_mass * (2 ** (-(t / substance.half_life)))
 
+    @staticmethod
+    def calc_step_delta(substance: Substance, N: float, d_t: float):
+        return -substance.decay_constant * N * d_t
+
 
 all = [
     'HalfLifeCalculator'
