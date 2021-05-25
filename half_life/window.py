@@ -159,6 +159,7 @@ class SimulationView(tk.Frame):
         self.app = controller
         
         self.running = False
+        self.paused = False
 
         self.decayed_points = []
         self.points = []
@@ -284,7 +285,8 @@ class SimulationView(tk.Frame):
                 self.points.append(self.draw_point(j * self.line_distance + self.point_size, i * self.line_distance + self.point_size))
         
     def start(self):
-        if self.running:
+        if self.running or self.paused:
+            self.paused = False
             self.running = False
             self.points_left.set(0)
             self.points_decayed.set(0)
@@ -311,15 +313,17 @@ class SimulationView(tk.Frame):
 
     def pause(self):
         if self.running:
+            self.paused = True
             self.running = False
             self.pause_btn.configure(text='Resume')
         else:
+            self.paused = False
             self.running = True
             self.pause_btn.configure(text='Pause')
             self.loop()
 
     def loop(self):
-        if not self.running:
+        if not self.running or len(self.points) == 0:
             return
         
         decayed_last = self.decayed
@@ -339,12 +343,10 @@ class SimulationView(tk.Frame):
             self.decayed_points.append(point)
             self.canvas.itemconfig(point, fill='orange')
 
+        self.time_elapsed.set(self.time_elapsed.get() + 1)
         self.update()
 
-        if len(self.points) == 0:
-            self.running = False
-
-        self.time_elapsed.set(self.time_elapsed.get() + 1)
+        if len(self.points) > 0:
         self.canvas.after(1000, self.loop)
 
         
