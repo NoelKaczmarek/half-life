@@ -28,7 +28,7 @@ class Window(tk.Tk):
         self.focus_force()
 
     def configure_gui(self):
-        self.title('Half-Life Simulation')
+        self.title('Half-Life Simulator')
         # img = tk.Image('photo', file=os.path.join(RESOURCE_PATH, 'icon.png'))
         # self.tk.call('wm','iconphoto', self._w, img)
         self.protocol('WM_DELETE_WINDOW', self.on_close)
