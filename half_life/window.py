@@ -307,9 +307,8 @@ class SimulationView(tk.Frame):
         self.substance = Substance(self.half_life.get(), 100)
         self.total_points.set(len(self.points))
         self.time_elapsed.set(0)
-        self.decayed = 0
 
-        self.loop()
+        self.canvas.after(1000, self.loop)
 
     def pause(self):
         if self.running:
