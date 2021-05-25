@@ -135,8 +135,8 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.grid_columnconfigure(0, weight=1)
 
-        label = ttk.Label(self, text='Start Page', font=LARGE_FONT)
-        label.grid(row=0, pady=10, padx=10, sticky=tk.E + tk.W)
+        label = ttk.Label(self, text='Half-Life Simulator', font=LARGE_FONT)
+        label.grid(row=0, pady=10, sticky=tk.E + tk.W)
 
         s = ttk.Style()
         s.configure('my.TButton', font=('Helvetica', 13))
