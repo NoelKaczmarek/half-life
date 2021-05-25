@@ -135,8 +135,8 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.grid_columnconfigure(0, weight=1)
 
-        label = ttk.Label(self, text='Half-Life Simulator', font=LARGE_FONT)
-        label.grid(row=0, pady=10, sticky=tk.E + tk.W)
+        title = ttk.Label(self, text='Half-Life Simulator', font=LARGE_FONT)
+        title.grid(row=0, pady=10, sticky=tk.E + tk.W)
 
         s = ttk.Style()
         s.configure('my.TButton', font=('Helvetica', 13))
@@ -183,8 +183,8 @@ class SimulationView(tk.Frame):
         self.point_size = 10
 
     def create_widgets(self):
-        label = ttk.Label(self, text='Simulation', font=LARGE_FONT)
-        label.pack(fill=tk.X)
+        title = ttk.Label(self, text='Simulation', font=LARGE_FONT)
+        title.pack(fill=tk.X)
 
         self.canvas = tk.Canvas(self)
         self.canvas.pack(expand=tk.YES, fill=tk.BOTH, pady=2)
@@ -373,8 +373,8 @@ class GraphView(tk.Frame):
         self.rowconfigure(4, pad=0, weight=1)
 
     def create_widgets(self):
-        label = ttk.Label(self, text='Dashboard', font=LARGE_FONT)
-        label.grid(row=0, column=0, sticky=tk.W)
+        title = ttk.Label(self, text='Dashboard', font=LARGE_FONT)
+        title.grid(row=0, column=0, sticky=tk.W)
 
         url_label = ttk.Label(self, text='Time Window:')
         url_label.grid(row=1, column=0, sticky=tk.W)
