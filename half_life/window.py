@@ -1,4 +1,4 @@
-from half_life import RESOURCE_PATH
+from half_life import RESOURCE_PATH, __version__, __author__
 from half_life.substance import Substance
 from half_life.calculator import HalfLifeCalculator
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -113,10 +113,10 @@ class Window(tk.Tk):
         win.rowconfigure(1, pad=2)
         win.rowconfigure(2, pad=2)
 
-        version = ttk.Label(win, text='Version 1.1.0')
+        version = ttk.Label(win, text='Version ' + __version__)
         version.grid(row=0, column=0)
 
-        credit = ttk.Label(win, text='© 2021 Noel Kaczmarek')
+        credit = ttk.Label(win, text='© 2021 ' + __author__)
         credit.grid(row=1, column=0)
 
         b = ttk.Button(win, text='OK', command=win.destroy)
