@@ -354,7 +354,7 @@ class SimulationView(tk.Frame):
         self.update()
 
         if len(self.points) > 0:
-        self.canvas.after(1000, self.loop)
+            self.canvas.after(1000, self.loop)
 
         
 class GraphView(tk.Frame):
